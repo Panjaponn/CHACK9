@@ -4,6 +4,7 @@
 <head>
     <link rel="stylesheet" href="navfooter.css">
     <link rel="stylesheet" href="imageresponsive.css">
+    <link rel="stylesheet" href="button.css">
     <title>EVERYBODY CHACK</title>
 </head>
 
@@ -11,20 +12,97 @@
     <!-- navbar -->
     <div class="container highlightTextIn" id="navbar">
         <a class="navbar" href="Home.html" alt="HOME">HOME</a>
-        <a class="navbar" href="Location.html" alt="LOCATION">LOCATION</a>
+        <a class="navbar" href="Mission.html" alt="MISSION">MISSION</a>
         <a class="navbar" href="Photo.html" alt="PHOTO">PHOTO</a>
         <a class="navbar" href="FORUM.html" alt="FORUM">FORUM</a>
     </div>
 
     <!-- content -->
-    <div class="containerimage">
-            <img src="https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=483e72cc532caf940f4885ba2e9e9418&auto=format&fit=crop&w=500&q=60">
-            <img src="https://images.unsplash.com/photo-1516692935701-4f35bff8b9f6?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5e8b07db9ad1b8626288bbbf77471558&auto=format&fit=crop&w=800&q=60">
-            <img src="https://images.unsplash.com/photo-1414500923875-1704944d8df7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f6841108c77bdd6cac2e69233a4cabfe&auto=format&fit=crop&w=800&q=60">
-            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=cea32ac97f8ffde3f76df4a646ac8b4d&auto=format&fit=crop&w=800&q=60">
-            <img src="https://images.unsplash.com/photo-1511912067142-80cfe131e059?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=db8b68aa247b45728605d6e9d04a0fd3&auto=format&fit=crop&w=800&q=60">
-            <img src="https://images.unsplash.com/photo-1430778569142-43551f375f9a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=22c0408262f81992aa34860df275fae5&auto=format&fit=crop&w=800&q=60">
-         </div>
+    <div style="text-align:center; margin-top: 15px">
+        <div class="upload-btn-wrapper">
+            <progress value="0" max="100" id="uploader">0%</progress>
+            <button class="btn">UPLOAD PHOTO</button>
+            <input type="file" value="upload" name="myfile" id="fileButton" />
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAsmpSoSuwY8N8HYno5g_KuYZpGYLNDaEg",
+            authDomain: "chack1.firebaseapp.com",
+            databaseURL: "https://chack1.firebaseio.com",
+            projectId: "chack1",
+            storageBucket: "chack1.appspot.com",
+            messagingSenderId: "299839561867"
+        };
+        firebase.initializeApp(config);
+        //get element
+        var uploader = document.getElementById('uploader');
+        var fileButton = document.getElementById('fileButton');
+
+        //listen for file selection
+        fileButton.addEventListener('change', function (e) {
+            //get file
+            var file = e.target.files[0];
+            //create a storage ref
+            var storageRef = firebase.storage().ref('folder_image/' + file.name);
+            //upload file
+            var task = storageRef.put(file);
+            //update progress bar
+            task.on('state_changed',
+                function progress(snapshot) {
+                    var percenrage = (snapshot.byteTransferred / snapshot.totalBytes) * 100;
+                    uploader.value = percentage;
+                },
+                function error(err) {
+
+                },
+                function complete() {
+
+                });
+        });
+
+        storageRef.child('folder_image/').getDownloadURL().then(function (url) {
+            // `url` is the download URL for 'images/stars.jpg'
+
+            // This can be downloaded directly:
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = 'blob';
+            xhr.onload = function (event) {
+                var blob = xhr.response;
+            };
+            xhr.open('GET', url);
+            xhr.send();
+
+            // Or inserted into an <img> element:
+            var img = document.getElementById('myimg');
+            img.src = url;
+        }).catch(function (error) {
+            // Handle any errors
+        });
+    </script>
+    <img id="myimg">
+
+    <!-- <image
+        src="https://firebasestorage.googleapis.com/v0/b/chack1.appspot.com/o/folder_image%2FScreen%20Shot%202562-01-11%20at%2021.36.31.png?alt=media&token=f463b8a3-4b9f-411c-9235-23b650f0a04a">
+    </image> -->
+    <!-- <div class="containerimage">
+        <img
+            src="https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=483e72cc532caf940f4885ba2e9e9418&auto=format&fit=crop&w=500&q=60">
+        <img
+            src="https://images.unsplash.com/photo-1516692935701-4f35bff8b9f6?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5e8b07db9ad1b8626288bbbf77471558&auto=format&fit=crop&w=800&q=60">
+        <img
+            src="https://images.unsplash.com/photo-1414500923875-1704944d8df7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f6841108c77bdd6cac2e69233a4cabfe&auto=format&fit=crop&w=800&q=60">
+        <img
+            src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=cea32ac97f8ffde3f76df4a646ac8b4d&auto=format&fit=crop&w=800&q=60">
+        <img
+            src="https://images.unsplash.com/photo-1511912067142-80cfe131e059?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=db8b68aa247b45728605d6e9d04a0fd3&auto=format&fit=crop&w=800&q=60">
+        <img
+            src="https://images.unsplash.com/photo-1430778569142-43551f375f9a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=22c0408262f81992aa34860df275fae5&auto=format&fit=crop&w=800&q=60">
+    </div> -->
+
+
     <!-- footer -->
     <footer>
         <div class="footer">
