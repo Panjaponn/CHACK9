@@ -1,42 +1,66 @@
-@import 'https://fonts.googleapis.com/css?family=Raleway';
-html, body {
-  margin: 0px;
+@import 'https://fonts.googleapis.com/css?family=Muli:400,700';
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: Muli;
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+body::after {
+  content: '';
+  display: block;
+  height: 100px;
 }
 
 /* footer */
+
 footer {
-  right: 0;
-  bottom: 0;
-  left: 0;
-  font-family: Raleway;
-  margin: 0 auto;
-  margin-bottom: 0;
-  padding: 3em 3em;
+  padding-top: 2em;
+  padding-bottom: 2em;
   text-align: center;
-  background: #555;
+  font-family: Arvo;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  margin-top: 6em;
+  background-color: #555;
+  font: white;
 }
 
-
-
-footer span {
-  color: #AAA;
+span {
+  font-family: Muli;
+  color: #FFF;
 }
 
 /* navbar */
 
 div.container {
-  font-family: Raleway;
+  font-family: Muli;
   margin: 0 auto;
-  padding: 5em 3em;
+  padding: 2em 3em;
   text-align: center;
   background: rgb(255, 202, 57);
   /*background color in navbar*/
+  position: fixed;
+  /* Set the navbar to fixed position */
+  top: 0;
+  /* Position the navbar at the top of the page */
+  width: 100%;
+  /* Full width */
+  z-index: 99;
 }
 
 div.container a {
   color: #FFF;
   text-decoration: none;
-  font: 20px Raleway;
+  font: 20px Muli;
   margin: 0px 10px;
   padding: 10px 10px;
   position: relative;
@@ -73,32 +97,126 @@ div.highlightTextIn a:before {
   transform: scale(1.2);
 }
 
-@media screen and (max-width: 400px){
-  header div{
-      margin: 0;
+@media screen and (max-width: 600px) {
+  header div footer {
+    margin: 0;
   }
-
-  header{
-      padding: 0;
+  header footer {
+    padding: 0;
+  }
+  span {
+    font-size: 50%;
   }
 }
 
 /* content */
+
+.content {
+  margin-top: 3em;
+  margin-bottom: 6em;
+}
+
 .demo {
   margin: 0 auto;
   padding-top: 64px;
   max-width: 70%;
   width: 94%;
-  font-family: Raleway;
+  font-family: Muli;
 }
 
-.demo h1 {
-  margin-top: 0;
+/* text in image and adjust image */
+.banner {
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
 }
 
-figure{
-  text-align: right;
-  text-shadow: #555;
-  font-family: Raleway;
-  font-size: 10pt;
+.banner {
+  width: 100%;
 }
+
+.heading {
+  color: white;
+  position: absolute;
+  top: 30%;
+  bottom: 50%;
+  width: 100%;
+  text-align: center;
+  text-shadow: 2px 2px 10px #000000;
+  font-family: Muli;
+}
+
+
+.img169 {
+  width: 100%;
+  height: 56.25vw;
+  max-height: 100vh;
+  max-width: 177.78vh;
+  float: center;
+}
+
+/* slider */
+
+@keyframes slider {
+
+  0% {
+    left: 0;
+  }
+  
+  20% {
+    left: 0;
+  }
+  
+  25% {
+    left: -100%;
+  }
+  
+  45% {
+      left: -100%;
+  
+  }
+  
+  50% {
+      left: -200%;
+  
+  }
+  
+  70% {
+    left: -200%;
+  }
+  
+  75% {
+    left: -300%;
+  }
+  
+  95% {
+    left: -300%;
+  }
+  
+  100% {
+    left: -400%;
+  
+  }
+  
+  }
+  
+  #slider {
+    overflow: hidden;
+  }
+  
+  #slider figure img {
+    width: 20%;
+    float: left;
+  }
+  
+  #slider figure {
+    position: relative;
+    width: 500%;
+    margin: 0;
+    left: 0;
+    text-align: left;
+    font-size: 0;
+    animation: 20s slider infinite; 
+  
+  }
